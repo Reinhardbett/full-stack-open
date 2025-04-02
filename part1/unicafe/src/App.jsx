@@ -1,9 +1,15 @@
 import { useState } from 'react';
 
+const Header = () => <h1>give feedback</h1>
+
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-const Statistics = ({ good, neutral, bad }) => {
-  if ( good + neutral + bad === 0 ) {
+const Content = () => <h1>statistics</h1>
+
+const StatisticLine = (props) => <p> {props.text} {props.value}</p>
+
+const Statistics = ( props ) => {
+  if ( props.good + props.neutral + props.bad === 0 ) {
     return (
       <div>
         <p>No feedback given</p>
@@ -12,12 +18,12 @@ const Statistics = ({ good, neutral, bad }) => {
   }
   return (
     <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {good + neutral + bad}</p>
-      <p>average {(good + neutral + bad)/3}</p>
-      <p>positive {(good + neutral)/(good + neutral + bad) * 100 + ' %'}</p>
+      <StatisticLine text="good" value={props.good}/>
+      <StatisticLine text="neutral" value={props.neutral}/>
+      <StatisticLine text="bad" value={props.bad}/>
+      <StatisticLine text="all" value={props.good + props.neutral + props.bad}/>
+      <StatisticLine text="average" value={(props.good + props.neutral + props.bad)/3}/>
+      <StatisticLine text="positive" value={(props.good + props.neutral)/(props.good + props.neutral + props.bad) * 100 + ' %'}/>
     </div>
   );
 };
@@ -29,26 +35,23 @@ const App = () => {
   const [bad, setBad] = useState(0)
 
   const handleGoodClick = () => {
-    console.log("clicked button")
     setGood(good + 1)
   }
 
   const handleNeutralClick = () => {
-    console.log("clicked button")
     setNeutral(neutral + 1)
   }
 
   const handleBadClick = () => {
-    console.log("clicked button")
     setBad(bad + 1)
   }
   return (
     <div>
-      <h1>give feedback</h1>
+      <Header />
       <Button onClick={handleGoodClick} text='good' />
       <Button onClick={handleNeutralClick} text='neutral' />
       <Button onClick={handleBadClick} text='bad' />
-      <h1>statistics</h1>
+      <Content />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
