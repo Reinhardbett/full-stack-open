@@ -14,7 +14,7 @@ const Form = ({ addName, newName, newNumber, handleNameChange, handleNumberChang
             />
             </div>
             <div>
-            <button type="submit">add</button>
+                <button type="submit">add</button>
             </div>
       </form>
     );
