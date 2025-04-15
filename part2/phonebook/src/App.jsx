@@ -3,6 +3,7 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import personService from "./services/persons";
+import Notification from "./components/Notification";
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [newFilteredName, setNewFilteredName] = useState('');
   const [filteredPersons, setFilteredPersons] = useState(persons);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // fetch data from json server
   useEffect(() => {
@@ -43,6 +45,13 @@ const App = () => {
         .then(updatedPerson => {
           setPersons(persons.map(person => person.id === existingPerson.id ? updatedPerson : person))
         })
+        .catch(error => {
+          // alert(`${existingPerson.name} has already been removed from server.`)
+          setErrorMessage(`information of ${existingPerson.name} has already been removed from server!`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
     } else {
       personService
         .create(personObject)
@@ -50,7 +59,11 @@ const App = () => {
           setPersons(persons.concat(newPerson))
           setNewName('')
           setNewNumber('')
-        });      
+          setErrorMessage(`${newPerson.name} added successfully!`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000) 
+        })   
     };
   }
 
@@ -93,6 +106,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter 
         newFilteredName={newFilteredName}
         handleFilteredNameChange={handleFilteredNameChange}
