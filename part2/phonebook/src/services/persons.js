@@ -1,5 +1,11 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:3001/persons';
+// const baseUrl = 'http://localhost:3001/persons';
+
+// Integrating the backend
+// const baseUrl = 'http://localhost:3001/api/persons';
+
+// Integrating the frontend
+const baseUrl = '/api/persons'
 
 // Create
 const create = (newObject) => {
@@ -14,11 +20,12 @@ const getAll = () => {
 }
 
 // Update
-const update = (id, newObject) => {
-    const request = axios.put(`${baseUrl}/${id}`, newObject)
-    return request.then(response => response.data)
-}
+// const update = (id, newObject) => {
+//     const request = axios.put(`${baseUrl}/${id}`, newObject)
+//     return request.then(response => response.data)
+// }
+
 // Delete
 const remove = (id) => axios.delete(`${baseUrl}/${id}`)
 
-export default { create, getAll, update, remove }
+export default { create, getAll, remove }
