@@ -34,7 +34,28 @@ const App = () => {
       number: newNumber,
     }
 
-    personService
+    // Prevent user from adding names that exist
+    const isRedundant = persons.some((person) => person.name === newName);
+    const existingPerson = persons.find((person) => person.name === newName);
+
+    if (isRedundant) {
+      window.confirm(`${newName} is already added to phonebook. Replace the old number with a new one?`)
+      personService
+        .update(existingPerson.id, personObject)
+        .then(updatedPerson => {
+          setPersons(persons.map(person => person.id === existingPerson.id ? updatedPerson : person))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          // alert(`${existingPerson.name} has already been removed from server.`)
+          setErrorMessage(`information of ${existingPerson.name} has already been removed from server!`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+    } else {
+      personService
         .create(personObject)
         .then(newPerson => {
           setPersons(persons.concat(newPerson))
@@ -44,29 +65,8 @@ const App = () => {
           setTimeout(() => {
             setErrorMessage(null)
           }, 5000) 
-        })
-
-    // Prevent user from adding names that exist
-    // const isRedundant = persons.some((person) => person.name === newName);
-    // const existingPerson = persons.find((person) => person.name === newName);
-
-  //   if (isRedundant) {
-  //     window.confirm(`${newName} is already added to phonebook replace the old number with a new one?`)
-  //     personService
-  //       .update(existingPerson.id, personObject)
-  //       .then(updatedPerson => {
-  //         setPersons(persons.map(person => person.id === existingPerson.id ? updatedPerson : person))
-  //       })
-  //       .catch(error => {
-  //         // alert(`${existingPerson.name} has already been removed from server.`)
-  //         setErrorMessage(`information of ${existingPerson.name} has already been removed from server!`)
-  //         setTimeout(() => {
-  //           setErrorMessage(null)
-  //         }, 5000)
-  //       })
-  //   } else {
-  //     // Insert CREATE NEW PERSON LOGIC    
-  //   };
+        })   
+    };
   }
 
   const deletePerson = (id, name) => {

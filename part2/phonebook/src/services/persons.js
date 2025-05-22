@@ -20,12 +20,12 @@ const getAll = () => {
 }
 
 // Update
-// const update = (id, newObject) => {
-//     const request = axios.put(`${baseUrl}/${id}`, newObject)
-//     return request.then(response => response.data)
-// }
+const update = (id, newObject) => {
+    const request = axios.put(`${baseUrl}/${id}`, newObject)
+    return request.then(response => response.data)
+}
 
 // Delete
 const remove = (id) => axios.delete(`${baseUrl}/${id}`)
 
-export default { create, getAll, remove }
+export default { create, getAll, remove, update }

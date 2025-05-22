@@ -37,6 +37,64 @@ morgan.token('body', (req) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 ```
 
+## 3. 🧱 **Models in Mongoose**
+
+Models are constructor functions that create new JavaScript objects based on a defined schema. These objects include all the properties and methods specified in the schema, including methods to interact with the database.
+
+### Saving an object
+
+To save a new object to the database, use the `save` method, which returns a promise:
+
+```js
+Person.save().then(result => {
+  console.log('person saved!');
+  mongoose.connection.close();
+});
+```
+
+### Retrieving objects
+
+To retrieve all documents from the collection, use the find method with an empty object as the search criteria:
+
+```js
+Person.find({}).then(result => {
+  result.forEach(person => {
+    console.log(person);
+  });
+  mongoose.connection.close();
+});
+```
+
+### Deleting an object
+
+You can delete an object using Mongoose's findByIdAndDelete method:
+
+```js
+app.delete('/api/notes/:id', (request, response, next) => {
+  Person.findByIdAndDelete(request.params.id)
+    .then(result => {
+      response.status(204).end();
+    })
+    .catch(error => next(error));
+});
+```
+
+## 4. 🔧 Formatting JSON Output
+
+By default, Mongoose includes fields like _id and __v that aren't always useful for frontend applications. To clean up the returned JSON, you can override the toJSON method in the schema:
+
+```js
+personSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  }
+});
+```
+
+
+
 ---
 
 ## 🧠 Concepts Practiced
@@ -53,6 +111,11 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 - Avoiding multiple responses using `return` before `res` calls in conditional branches
 - Managing in-memory data updates properly (especially in DELETE route)
 - Formatting HTML responses with line breaks using `<br>`
+- Define and use Mongoose models
+- Save and fetch data from MongoDB
+- Format returned JSON for frontend use
+- Centralize error handling with middleware
+- Perform CRUD operations via RESTful routes
 
 ---
 
@@ -83,22 +146,4 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 ---
 
-## 📦 Dependencies
-
-- [express](https://www.npmjs.com/package/express)
-- [morgan](https://www.npmjs.com/package/morgan)
-
----
-
-## 📁 Project Structure
-
-```
-├── index.js        # Main application file
-├── package.json
-└── README.md       # You're here!
-```
-
----
-
 Made with ❤️ during the Full Stack Open course.
-
