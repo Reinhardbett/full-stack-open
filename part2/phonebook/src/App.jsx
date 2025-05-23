@@ -48,11 +48,11 @@ const App = () => {
           setNewNumber('')
         })
         .catch(error => {
-          // alert(`${existingPerson.name} has already been removed from server.`)
+          alert(`${existingPerson.name} has already been removed from server.`)
           setErrorMessage(`information of ${existingPerson.name} has already been removed from server!`)
           setTimeout(() => {
             setErrorMessage(null)
-          }, 5000)
+          }, 2000)
         })
     } else {
       personService
@@ -64,8 +64,16 @@ const App = () => {
           setErrorMessage(`${newPerson.name} added successfully!`)
           setTimeout(() => {
             setErrorMessage(null)
-          }, 5000) 
-        })   
+          }, 2000) 
+        }) 
+        .catch(error => {
+          setNewName('')
+          setNewNumber('')
+          setErrorMessage(error.response.data.error)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 2000)
+        }) 
     };
   }
 
