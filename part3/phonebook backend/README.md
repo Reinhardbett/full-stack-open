@@ -92,7 +92,31 @@ personSchema.set('toJSON', {
   }
 });
 ```
+## 5. 🔍 Validation and ESLint
 
+One can validate the format of the data before it is stored using the validation functionality available in Mongoose.
+
+The minLength and required validators are some of the built-in validators provided by Mongoose. 
+
+The Mongoose custom validator functionality allows us to create new validators if none of the built-in ones cover our needs.
+
+```javascript
+const userSchema = new Schema({
+  phone: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /\d{3}-\d{3}-\d{4}/.test(v);
+      },
+      message: props => `${props.value} is not a valid phone number!`
+    },
+    required: [true, 'User phone number required']
+  }
+});
+```
+
+
+Custom validators will often use [regex](https://www.rexegg.com/regex-quickstart.php) functions to define our constraints. 
 
 
 ---
@@ -116,6 +140,9 @@ personSchema.set('toJSON', {
 - Format returned JSON for frontend use
 - Centralize error handling with middleware
 - Perform CRUD operations via RESTful routes
+- Validation and ESLint
+- Running the linter
+- Adding more rules and styles to the lint configuration files
 
 ---
 
