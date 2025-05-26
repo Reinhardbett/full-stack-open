@@ -1,0 +1,12 @@
+{
+  "name": "blog_list",
+  "version": "1.0.0",
+  "description": "Covers part 4 of fso course",
+  "license": "ISC",
+  "author": "Reinhardt Bett",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
