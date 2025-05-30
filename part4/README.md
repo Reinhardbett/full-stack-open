@@ -2,7 +2,6 @@
 
 For this project, we will adhere to the following project structure:
 
-[INSERT PROJECT STRUCTURE]
 ![best practices node project structure](image.png)
 
 The above project structure helps one abide to [best practices](https://dev.to/nermine-slimane/always-separate-app-and-server-files--1nc7) such as separating API declaration and network-related configurations.
