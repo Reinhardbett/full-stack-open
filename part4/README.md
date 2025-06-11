@@ -375,6 +375,78 @@ notesRouter.delete('/:id', async (request, response) => {
 
 # c. User Administration
 
+## References across collections
+Users should be stored in the database and every note should be linked to the user who created it.
+
+We can use object IDs in Mongo to reference documents in other collections. This is similar to using foreign keys in relational databases.
+
+If we do not want to change the existing collection, then the natural choice is to save users in their own collection, users for example:
+
+```javascript
+[
+  {
+    username: 'mluukkai',
+    _id: 123456,
+    notes: [221212, 221255],
+  },
+]
+```
+The notes collection would look like:
+```javascript
+[
+  {
+    username: 'mluukkai',
+    _id: 123456,
+    notes: [
+      {
+        content: 'HTML is easy',
+        important: false,
+      },
+      {
+        content: 'The most important operations of HTTP protocol are GET and POST',
+        important: true,
+      },
+    ],
+  },
+]
+```
+In this schema, notes would be tightly nested under users and the database would not generate ids for them.
+
+## Mongoose Schema for users
+
+We will define the model for representing a user in the models/user.js file:
+
+```javascript
+const mongoose = require('mongoose')
+
+const userSchema = new mongoose.Schema({
+  username: String,
+  name: String,
+  passwordHash: String,
+  // defines id's of notes
+  notes: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Means it refers to another object
+      ref: 'Note' // specifies the name of the model being referenced
+    }
+  ],
+})
+
+userSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+    // the passwordHash should not be revealed
+    delete returnedObject.passwordHash
+  }
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
+```
+
 # d. Token authentication
 
 ---
