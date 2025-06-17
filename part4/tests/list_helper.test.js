@@ -11,9 +11,8 @@ test('dummy returns one', () => {
 
 describe('total likes', () => {
   test('of empty list is zero', () => {
-    const blogs = []
 
-    const result = listHelper.totalLikes(blogs)
+    const result = listHelper.totalLikes([])
     assert.strictEqual(result, 0)
   })
 
