@@ -46,6 +46,7 @@ describe('when creating a new blog', () => {
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
+      .catch(err => console.log(err.response.body))
 
 
     const blogsAfterOp = await helper.blogsInDb()
