@@ -1,8 +1,8 @@
-# 📘 ** FullStackOpen – Part 5 Notes & Exercises **
+# 📘 **FullStackOpen – Part 5 Notes & Exercises**
 
-## 🗺️ ** Overview **
-- ** a Login in frontend **
-  - ** Main concepts: **
+## 🗺️ **Overview**
+- **a Login in frontend**
+  - **Main concepts:**
     - Conditional Rendering
     - Label elements
     - Local storage
@@ -12,25 +12,25 @@
 
 ---
 
-## ✅ ** Exercises Checklist **
+## ✅ **Exercises Checklist**
 
-- [x] ** Exercise 5.1: ** Implement login functionality to the frontend
-- [x] ** Exercise 5.2: ** Make the login 'permanent' by using the local storage. Also, implement a way to log out
-- [x] ** Exercise 5.3: ** Expand application to allow the logged-in user to add new blogs
-- [x] ** Exercise 5.4: ** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
+- [x] **Exercise 5.1:** Implement login functionality to the frontend
+- [x] **Exercise 5.2:** Make the login 'permanent' by using the local storage. Also, implement a way to log out
+- [x] **Exercise 5.3:** Expand application to allow the logged-in user to add new blogs
+- [x] **Exercise 5.4:** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
 
 ---
 
-## 🧑‍💻 ** Exercises Log & Notes **
+## 🧑‍💻 **Exercises Log & Notes**
 
-** Exercise 5.1 - implement login functionality to the frontend **
+**Exercise 5.1 - implement login functionality to the frontend**
 
-** Concepts Learned **
+**Concepts Learned**
 
 - The user state stores elements such as the creation form or login details
 - The label element improves the form's accessibility. This way, screen readers can read the field's name to the user when the input field is selected and clicking on the label's text automatically focuses on the correct input field.
 
-** Implementation ** 
+**Implementation** 
 ```javascript
 <div>
   <label>
@@ -47,14 +47,14 @@
 
 --- 
 
-** Exercise 5.2: Make the login 'permanent' by using the local storage. Also, implement a way to log out **
+**Exercise 5.2: Make the login 'permanent' by using the local storage. Also, implement a way to log out**
 
-** Concepts Learned ** 
+**Concepts Learned** 
 
 - We persist details of a logged-in user on the local storage. 
 - The user details are saved to `user` state before being sent to blogService.
 
-** Implementation **
+**Implementation**
 ```javascript
 try {
   const user = await loginService.login({ username, password })
@@ -73,15 +73,15 @@ try {
 
 ---
 
-** Exercise 5.3 - Expand application to allow the logged-in user to add new blogs **
+**Exercise 5.3 - Expand application to allow the logged-in user to add new blogs**
 
-** Concepts Learned **
+**Concepts Learned**
 
 - To ensure the frontend creation forms work with the backend, we must add the token of the logged-in user to the authorization header of the HTTP request.
 - The `blogService` module contains a private variable called `token` which can be modified with the `setToken` function setting the token to the Authorization header.
 - The event handler responsible for login must be changed to call the above method for a successful login.
 
-** Implementation **
+**Implementation**
 ```javascript
 const create = async newBlog => {
   const config = {
@@ -95,14 +95,14 @@ const create = async newBlog => {
 
 ---
 
-** Exercise 5.4 - Implement notifications that inform the user about successful and unsuccessful operations at the top of the page **
+**Exercise 5.4 - Implement notifications that inform the user about successful and unsuccessful operations at the top of the page**
 
-** Concepts Learned **
+**Concepts Learned**
 
 - Centralized notification logic improves user experience by providing immediate feedback for both successful and unsuccessful operations.
 - By calling `showNotification` in event handlers (login, logout, blog creation), users are informed about the outcome of their actions without manual page refreshes.
 
-** Implementation **
+**Implementation**
 ```javascript
 const showNotification = (message, type = 'success') => {
   setNotification({ message, type })
