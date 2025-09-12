@@ -6,9 +6,13 @@
     - Conditional Rendering
     - Label elements
     - Local storage
-- b props.children and proptypes
-- c Testing React apps
-- d End to end testing
+- **b props.children and proptypes**
+  - **Main concepts:**
+    - Togglable React components
+    - props.children
+    - useREF hooks
+- **c Testing React apps**
+- **d End to end testing**
 
 ---
 
@@ -18,6 +22,14 @@
 - [x] **Exercise 5.2:** Make the login 'permanent' by using the local storage. Also, implement a way to log out
 - [x] **Exercise 5.3:** Expand application to allow the logged-in user to add new blogs
 - [x] **Exercise 5.4:** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
+- [ ] **Exercise 5.5:** Change the creation form to be displayed only when appropriate
+- [ ] **Exercise 5.6:** Separate the creation form and all relevant states into its own component
+- [ ] **Exercise 5.7:** Add a button to each blog to control whether all of the details about the blog are shown or not
+- [ ] **Exercise 5.8:** Implement functionality for the like button.
+- [ ] **Exercise 5.9** Ensure when a blog is liked, the name of the user that added the blog is shown in the details
+- [ ] **Exercise 5.10** Sort the blog posts by the number of likes
+- [ ] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
+- [ ] **Exercise 5.12** Add ESlint to the project and fix all the linter errors
 
 ---
 
@@ -114,3 +126,10 @@ const showNotification = (message, type = 'success') => {
 ```jsx
 <Notification message={notification.message} type={notification.type} />
 ```
+
+---
+
+**Exercise 5.5 - Change the creation form to be displayed only when appropriate**
+
+**Concepts Learned**
+
