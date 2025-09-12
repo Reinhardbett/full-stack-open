@@ -1,64 +1,116 @@
-# Exercise 5.1.
-## (implement login functionality to the frontend)
-- [x] Create login form (username and password)
-- [x] If a user is not logged in, only the login form should be visible
-    - [x] Save the token returned from a successful login to the application's state user
-- [x] If the user is logged-in name of the user and a list of blogs should be shown
+# 📘 ** FullStackOpen – Part 5 Notes & Exercises **
 
-- Logging in is done by sending an HTTP POST request to the server address `api/login`.
-- The logic is separated into its own module `services/login.js`
-- If the login is successful, the form fields are emptied and the server response (token, username, password) are saved to the user state
-- If the login fails or running the fucntion loginService.login results in an error, the user is notified.
-- The user state is used to conditionally show other elements such as the creation form or login details
-- The label element provides descriptions for input fields and help improves the form's accessibility. This way, screen readers can read the field's name to the user when the input field is selected and clicking on the label's text automatically focuses on the correct input field.
+## 🗺️ ** Overview **
+- ** a Login in frontend **
+  - ** Main concepts: **
+    - Conditional Rendering
+    - Label elements
+    - Local storage
+- b props.children and proptypes
+- c Testing React apps
+- d End to end testing
+
+---
+
+## ✅ ** Exercises Checklist **
+
+- [x] ** Exercise 5.1: ** Implement login functionality to the frontend
+- [x] ** Exercise 5.2: ** Make the login 'permanent' by using the local storage. Also, implement a way to log out
+- [x] ** Exercise 5.3: ** Expand application to allow the logged-in user to add new blogs
+- [x] ** Exercise 5.4: ** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
+
+---
+
+## 🧑‍💻 ** Exercises Log & Notes **
+
+** Exercise 5.1 - implement login functionality to the frontend **
+
+** Concepts Learned **
+
+- The user state stores elements such as the creation form or login details
+- The label element improves the form's accessibility. This way, screen readers can read the field's name to the user when the input field is selected and clicking on the label's text automatically focuses on the correct input field.
+
+** Implementation ** 
+```javascript
+<div>
+  <label>
+    username
+    <input
+      type="text"
+      value={username}
+      onChange={({ target }) => setUsername(target.value)}
+    />
+  </label>
+</div>
+// ...
+```
 
 --- 
 
-# Exercise 5.2.
-## (make the login 'permanent' by using the local storage. Also, implement a way to log out)
-- [x] Save the logged in user's details to local storage
-- [x] Implement a log out button and flow process
-- [x] Ensure the browser does not remember the user details after logging out
+** Exercise 5.2: Make the login 'permanent' by using the local storage. Also, implement a way to log out **
 
-- If the browser is refreshed, the user's login information will disappear.
-- Local storage is a key-value database in the browser. A value corresponding to a certain key is saved using the method `setItem`
-- The value of a key can be found with the method `getItem`
-- The key can be removed with `removeItem`
-- The storage is origin-specific so each web application has its own storage.
-- The values saved to local storage are DOMstrings. Therefore, we cannot save a JavaScript object as it is. The object has to be parsed to JSON first, with the method JSON.stringify.
-- Correspondingly, when a JSON object is read from the local storage, it has to be parsed back to JavaScript with `JSON.parse`
-- You can also inspect the local storage using the developer tools. On Chrome, go to the Application tab and select Local Storage. On Firefox go to the Storage tab and select Local Storage.
-- In our application, we check if the user details of a logged-in user can already be found on the local storage. If they are there the details are saved to the state of the application and to blogService.
+** Concepts Learned ** 
 
-```jsx
-const handleLogin = async (event) => {
-  // ...existing code...
-  window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-  // ...existing code...
-}
+- We persist details of a logged-in user on the local storage. 
+- The user details are saved to `user` state before being sent to blogService.
 
-const handleLogout = () => {
-  window.localStorage.removeItem('loggedInUser')
-  setUser(null)
-  showNotification('Logged out successfully.', 'success')
+** Implementation **
+```javascript
+try {
+  const user = await loginService.login({ username, password })
+  window.localStorage.setItem(
+    'loggedInUser', JSON.stringify(user)
+  )
+  blogService.setToken(user.token)
+  setUser(user)
+  setUsername('')
+  setPassword('')
+  showNotification(`Welcome ${user.name}!`, 'success')
+} catch {
+  showNotification('Wrong credentials', 'error')
 }
 ```
 
 ---
 
-# Exercise 5.3.
-## (expand application to allow the logged-in user to add new blogs)
-- [x] Store new blog details in a new state
-- [x] Add form inputs for blog details
-- [x] Send the blog details to the backend
+** Exercise 5.3 - Expand application to allow the logged-in user to add new blogs **
+
+** Concepts Learned **
 
 - To ensure the frontend creation forms work with the backend, we must add the token of the logged-in user to the authorization header of the HTTP request.
 - The `blogService` module contains a private variable called `token` which can be modified with the `setToken` function setting the token to the Authorization header.
 - The event handler responsible for login must be changed to call the above method for a successful login.
 
+** Implementation **
+```javascript
+const create = async newBlog => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  const response = await axios.post(baseUrl, newBlog, config)
+  return response.data
+}
+```
+
 ---
 
-# Exercise 5.4.
-## (implement notifications that inform the user about successful and unsuccessful operations at the top of the page)
-- [x] Implement operation notifications at the top of the logged-in user's page
-- [x] Implement notifications at the login page
+** Exercise 5.4 - Implement notifications that inform the user about successful and unsuccessful operations at the top of the page **
+
+** Concepts Learned **
+
+- Centralized notification logic improves user experience by providing immediate feedback for both successful and unsuccessful operations.
+- By calling `showNotification` in event handlers (login, logout, blog creation), users are informed about the outcome of their actions without manual page refreshes.
+
+** Implementation **
+```javascript
+const showNotification = (message, type = 'success') => {
+  setNotification({ message, type })
+  setTimeout(() => {
+    setNotification({ message: null, type: null })
+  }, 5000)
+}
+```
+```jsx
+<Notification message={notification.message} type={notification.type} />
+```
