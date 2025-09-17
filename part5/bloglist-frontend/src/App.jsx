@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
+import ToggleForm from './components/ToggleForm'
 
 const Notification = ({ message, type }) => {
   if (!message) return null
@@ -25,7 +28,7 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [notification, setNotification] = useState({ message: null, type: null })
-  
+    
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
@@ -95,29 +98,15 @@ const App = () => {
     return (
       <div>
         <Notification message={notification.message} type={notification.type} />
-        <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            <label>
-              username
-              <input
-                type="text"
-                value={username}
-                onChange={({ target }) => setUsername(target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              password
-              <input
-                type="password"
-                onChange={({ target }) => setPassword(target.value)}
-              />
-            </label>
-          </div>
-          <button type="submit">login</button>
-        </form>
+          <ToggleForm buttonLabel="Log in to application">
+            <LoginForm
+              username={username}
+              password={password}
+              handleUsernameChange={({ target }) => setUsername(target.value)}
+              handlePasswordChange={({ target }) => setPassword(target.value)}
+              handleLogin={handleLogin}
+            />
+          </ToggleForm>
       </div>
     )
   }
@@ -125,49 +114,23 @@ const App = () => {
   return (
     <div>
       <Notification message={notification.message} type={notification.type} />
-      <h2>blogs</h2>
       {user && (
         <div>
-          <h2>create new</h2>
-          <form onSubmit={handleCreateBlog}>
-            <div>
-              <label>
-                title:
-                <input
-                  type="text"
-                  value={title}
-                  onChange={({ target }) => setTitle(target.value)}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                author:
-                <input
-                  type="text"
-                  value={author}
-                  onChange={({ target }) => setAuthor(target.value)}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                url:
-                <input
-                  type="text"
-                  value={url}
-                  onChange={({ target }) => setUrl(target.value)}
-                />
-              </label>
-            </div>
-            <button type="submit">create</button>
-          </form>
-        </div>
-      )}
-      {user && (
-        <div>
+          <h2>blogs</h2>
           <p>{user.name} logged in</p>
           <button type="submit" onClick={handleLogout}>logout</button>
+          <ToggleForm buttonLabel="Create new blog">
+            <BlogForm 
+              user={user}
+              title={title}
+              author={author}
+              url={url}
+              handleTitleChange={({ target }) => setTitle(target.value)}
+              handleAuthorChange={({ target }) => setAuthor(target.value)}
+              handleUrlChange={({ target }) => setUrl(target.value)}
+              handleCreateBlog={handleCreateBlog}
+            />
+          </ToggleForm>
         </div>
       )}
       {blogs.map(blog =>

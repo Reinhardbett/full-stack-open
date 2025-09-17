@@ -132,4 +132,49 @@ const showNotification = (message, type = 'success') => {
 **Exercise 5.5 - Change the creation form to be displayed only when appropriate**
 
 **Concepts Learned**
+- Components are reusable javascript functions that return `jsx` markdown
+- States and functions can be passed down from parent components to children components
+- To reuse the `ToggleForm` component the code has assumed a tree structure from the parent `App` component i.e
 
+```mermaid
+graph TD
+    A[App Component] -->|buttonLabel="login"| B[Togglable]
+    A -->|buttonLabel="new blog"| D[Togglable]
+
+    %% Togglable children
+    B -->|children| C[LoginForm]
+    D -->|children| E[BlogForm]
+
+    %% App state and handlers passed to LoginForm
+    A -.->|username, password| C
+    A -.->|setUsername, setPassword| C
+    A -.->|handleLogin| C
+
+    %% App state and handlers passed to BlogForm
+    A -.->|title, author, url| E
+    A -.->|setTitle, setAuthor, setUrl| E
+    A -.->|handleBlogSubmit| E
+```
+
+**Implementation**
+```javascript
+//...
+const App = () => {
+//..
+ return (
+      <div>
+        //...
+          <ToggleForm buttonLabel="Log in to application">
+            <LoginForm
+              username={username}
+              password={password}
+              handleUsernameChange={({ target }) => setUsername(target.value)}
+              handlePasswordChange={({ target }) => setPassword(target.value)}
+              handleLogin={handleLogin}
+            />
+          </ToggleForm>
+      </div>
+    )
+}
+export default App
+```
