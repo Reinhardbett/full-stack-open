@@ -138,22 +138,11 @@ const showNotification = (message, type = 'success') => {
 
 ```mermaid
 graph TD
-    A[App Component] -->|buttonLabel: login| B[Togglable]
-    A -->|buttonLabel: new blog| D[Togglable]
+    A[App Component] --> B[Togglable: login]
+    B --> C[LoginForm]
 
-    %% Togglable children
-    B -->|children| C[LoginForm]
-    D -->|children| E[BlogForm]
-
-    %% App state and handlers passed to LoginForm
-    A -.->|username, password| C
-    A -.->|setUsername, setPassword| C
-    A -.->|handleLogin| C
-
-    %% App state and handlers passed to BlogForm
-    A -.->|title, author, url| E
-    A -.->|setTitle, setAuthor, setUrl| E
-    A -.->|handleBlogSubmit| E
+    A[App Component] --> D[Togglable: new blog]
+    D --> E[BlogForm]
 ```
 
 **Implementation**
