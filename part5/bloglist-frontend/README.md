@@ -22,7 +22,7 @@
 - [x] **Exercise 5.2:** Make the login 'permanent' by using the local storage. Also, implement a way to log out
 - [x] **Exercise 5.3:** Expand application to allow the logged-in user to add new blogs
 - [x] **Exercise 5.4:** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
-- [ ] **Exercise 5.5:** Change the creation form to be displayed only when appropriate
+- [x] **Exercise 5.5:** Change the creation form to be displayed only when appropriate
 - [ ] **Exercise 5.6:** Separate the creation form and all relevant states into its own component
 - [ ] **Exercise 5.7:** Add a button to each blog to control whether all of the details about the blog are shown or not
 - [ ] **Exercise 5.8:** Implement functionality for the like button.
@@ -138,8 +138,8 @@ const showNotification = (message, type = 'success') => {
 
 ```mermaid
 graph TD
-    A[App Component] -->|buttonLabel="login"| B[Togglable]
-    A -->|buttonLabel="new blog"| D[Togglable]
+    A[App Component] -->|buttonLabel: login| B[Togglable]
+    A -->|buttonLabel: new blog| D[Togglable]
 
     %% Togglable children
     B -->|children| C[LoginForm]
