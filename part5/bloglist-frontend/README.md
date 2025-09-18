@@ -177,3 +177,32 @@ export default App
   - BlogForm inputs → local to `BlogForm`.
 - Lift state up: Only move it higher when you discover multiple components need it i.e.
   - To ensure the state of two components always change together, remove the state from both components to their closest common parent, and pass it down via props.
+
+---
+
+**Exercise 5.7 - Add a button to each blog to control whether all of the details about the blog are shown or not**
+
+**Concepts Learned**
+- div elements are block thus will begin in a new line in the browser
+- Toggling algorithm can be implemented using states
+
+**implementation**
+```javascript
+<div>
+  {!visible && (
+    <div>
+      {/* Stuff that will show after clicking hide */} 
+      <button onClick={() => setVisible(true)}>view</button>
+    </div> 
+  )} 
+  {visible && (
+    <div>
+      {/* Stuff that will show after clicking view */} 
+      <button onClick={() => setVisible(false)}>hide</button>
+    </div>
+  )}
+</div>
+```
+
+---
+
