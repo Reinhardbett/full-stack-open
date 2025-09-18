@@ -23,7 +23,7 @@
 - [x] **Exercise 5.3:** Expand application to allow the logged-in user to add new blogs
 - [x] **Exercise 5.4:** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
 - [x] **Exercise 5.5:** Change the creation form to be displayed only when appropriate
-- [ ] **Exercise 5.6:** Separate the creation form and all relevant states into its own component
+- [x] **Exercise 5.6:** Separate the creation form and all relevant states into its own component
 - [ ] **Exercise 5.7:** Add a button to each blog to control whether all of the details about the blog are shown or not
 - [ ] **Exercise 5.8:** Implement functionality for the like button.
 - [ ] **Exercise 5.9** Ensure when a blog is liked, the name of the user that added the blog is shown in the details
@@ -167,3 +167,13 @@ const App = () => {
 }
 export default App
 ```
+
+---
+
+**Exercise 5.6 - Separate the creation form and all relevant states into its own component**
+
+**Concepts Learned**
+- Localize state: Start with state as close to where it’s used as possible.
+  - BlogForm inputs → local to `BlogForm`.
+- Lift state up: Only move it higher when you discover multiple components need it i.e.
+  - To ensure the state of two components always change together, remove the state from both components to their closest common parent, and pass it down via props.
