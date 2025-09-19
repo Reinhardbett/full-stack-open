@@ -24,8 +24,8 @@
 - [x] **Exercise 5.4:** Implement notifications that inform the user about successful and unsuccessful operations at the top of the page
 - [x] **Exercise 5.5:** Change the creation form to be displayed only when appropriate
 - [x] **Exercise 5.6:** Separate the creation form and all relevant states into its own component
-- [ ] **Exercise 5.7:** Add a button to each blog to control whether all of the details about the blog are shown or not
-- [ ] **Exercise 5.8:** Implement functionality for the like button.
+- [x] **Exercise 5.7:** Add a button to each blog to control whether all of the details about the blog are shown or not
+- [x] **Exercise 5.8:** Implement functionality for the like button.
 - [ ] **Exercise 5.9** Ensure when a blog is liked, the name of the user that added the blog is shown in the details
 - [ ] **Exercise 5.10** Sort the blog posts by the number of likes
 - [ ] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
@@ -206,3 +206,17 @@ export default App
 
 ---
 
+**Exercise 5.8 - Implement functionality for the like button.**
+
+**Concepts Learned**
+- The backend supports updating via `PUT /api/blogs/:id` with `{ likes: newLikes }` in the request body
+- To update using `HTTP PUT`, the whole blog must be replaced with only the required change i.e, like + 1
+
+**Implementation**
+```javascript
+const handleLike = async () => {
+  const updatedBlog = { ...blog, likes: likes + 1 }
+  const returnedBlog = await blogService.update(blog.id, updatedBlog)
+  setLikes(returnedBlog.likes)
+}
+```
