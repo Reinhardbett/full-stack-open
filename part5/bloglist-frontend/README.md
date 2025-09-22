@@ -26,8 +26,8 @@
 - [x] **Exercise 5.6:** Separate the creation form and all relevant states into its own component
 - [x] **Exercise 5.7:** Add a button to each blog to control whether all of the details about the blog are shown or not
 - [x] **Exercise 5.8:** Implement functionality for the like button.
-- [ ] **Exercise 5.9** Ensure when a blog is liked, the name of the user that added the blog is shown in the details
-- [ ] **Exercise 5.10** Sort the blog posts by the number of likes
+- [x] **Exercise 5.9** Ensure when a blog is liked, the name of the user that added the blog is shown in the details
+- [x] **Exercise 5.10** Sort the blog posts by the number of likes
 - [ ] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
 - [ ] **Exercise 5.12** Add ESlint to the project and fix all the linter errors
 
@@ -220,3 +220,25 @@ const handleLike = async () => {
   setLikes(returnedBlog.likes)
 }
 ```
+
+---
+
+**Exercise 5.10 - Sort the blog posts by the number of likes**
+
+**Concepts Learned**
+- One can chain a `sort` function with `map` function declarations
+- `.slice()` creates a shallow copy so you don’t mutate the original blogs array.
+- `.sort((a, b) => b.likes - a.likes)` sorts blogs in descending order by likes.
+
+**Implementation**
+```javascript
+{blogs
+  .slice() // create a copy to avoid mutating state
+  .sort((a, b) => b.likes - a.likes)
+  .map(blog =>
+    <Blog key={blog.id} blog={blog} user={user} />
+  )
+}
+```
+
+---
