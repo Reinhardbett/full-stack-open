@@ -66,6 +66,11 @@ const App = () => {
     showNotification('Logged out successfully.', 'success')
   }
 
+  const handleDeleteBlog =(id) => {
+    setBlogs(blogs.filter(blog => blog.id !== id))
+    showNotification('Blog deleted!', 'success')
+  }
+
   if (user === null) {
     return (
       <div>
@@ -99,7 +104,7 @@ const App = () => {
         .slice() // create a shallow copy to avoid mutating state
         .sort((a, b) => b.likes - a.likes)
         .map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} />
+          <Blog key={blog.id} blog={blog} user={user} onDelete={handleDeleteBlog} />
         )
       }
     </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog, user, onDelete }) => {
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
@@ -19,6 +19,16 @@ const Blog = ({ blog, user }) => {
     setLikes(returnedBlog.likes)
   }
 
+  const handleDelete = async () => {
+    if (window.confirm(`Delete "${blog.title}" by ${blog.author}?`)) {
+      await blogService.remove(blog.id)
+      onDelete(blog.id)
+    }
+  }
+
+  // Check if logged-in user is the creator of the blog
+  const isOwner = blog.user && user && blog.user.username === user.username
+
   return (
     <div style={blogStyle}>
       {!visible && (
@@ -29,14 +39,21 @@ const Blog = ({ blog, user }) => {
       )} 
       {visible && (
         <div>
-          <div>{blog.title}</div>
+          <div>
+            {blog.title} {blog.author}
+            <button onClick={() => setVisible(false)}>hide</button>
+          </div>
           <div>{blog.url}</div>
           <div>
             likes { likes }
             <button onClick={handleLike}>like</button>
           </div>
           <div>{user.username}</div>
-          <button onClick={() => setVisible(false)}>hide</button>
+          {isOwner && (
+            <button onClick={handleDelete} style={{ background: 'red', color: 'white' }}>
+              delete
+            </button>
+          )}
         </div>
       )}
     </div>

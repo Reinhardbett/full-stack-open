@@ -242,3 +242,21 @@ const handleLike = async () => {
 ```
 
 ---
+
+**Exercise 5.11 - Add the logic for deleting blog posts in the frontend**
+
+**Concepts Learned**
+- To ensure logged-in user is creator of the blog, we can chain && operands
+- The delete function will also use the filter function
+
+**Implementation**
+```javascript
+// Check if the logged-in user is the creator of the blog
+  const isOwner = blog.user && user && blog.user.username === user.username
+
+//App.jsx implementation
+const handleDeleteBlog = (id) => {
+  setBlogs(blogs.filter(blog => blog.id !== id))
+  showNotification('Blog deleted!', 'success')
+}
+```
