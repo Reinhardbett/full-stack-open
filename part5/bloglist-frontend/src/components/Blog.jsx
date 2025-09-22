@@ -35,8 +35,8 @@ const Blog = ({ blog, user, onDelete }) => {
         <div>
           {blog.title} {blog.author}
           <button onClick={() => setVisible(true)}>view</button>
-        </div> 
-      )} 
+        </div>
+      )}
       {visible && (
         <div>
           <div>

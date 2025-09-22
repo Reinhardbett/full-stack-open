@@ -12,11 +12,11 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({ message: null, type: null })
-    
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -34,13 +34,13 @@ const App = () => {
       setNotification({ message: null, type: null })
     }, 2000)
   }
-  
+
   const handleCreateBlog = async (blogObject) => {
-    try { 
+    try {
       const returnedBlog = await blogService.create(blogObject)
       setBlogs(blogs.concat(returnedBlog))
       showNotification(`A new blog "${returnedBlog.title}" by ${returnedBlog.author} added!`, 'success')
-    } catch (error) {
+    } catch {
       showNotification('Failed to add blog. Please check your input or authentication.', 'error')
     }
   }
@@ -75,11 +75,11 @@ const App = () => {
     return (
       <div>
         <Notification message={notification.message} type={notification.type} />
-          <ToggleForm buttonLabel="Log in to application">
-            <LoginForm
-              handleLogin={handleLogin}
-            />
-          </ToggleForm>
+        <ToggleForm buttonLabel="Log in to application">
+          <LoginForm
+            handleLogin={handleLogin}
+          />
+        </ToggleForm>
       </div>
     )
   }
@@ -93,7 +93,7 @@ const App = () => {
           <p>{user.name} logged in</p>
           <button type="submit" onClick={handleLogout}>logout</button>
           <ToggleForm buttonLabel="Create new blog">
-            <BlogForm 
+            <BlogForm
               user={user}
               handleCreateBlog={handleCreateBlog}
             />
