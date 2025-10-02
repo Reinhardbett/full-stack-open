@@ -11,5 +11,10 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true, // Allows us to use testing keywords without importing
+    setupFiles: './testSetup.js',
   }
 })

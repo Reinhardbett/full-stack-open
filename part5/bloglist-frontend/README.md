@@ -28,8 +28,12 @@
 - [x] **Exercise 5.8:** Implement functionality for the like button.
 - [x] **Exercise 5.9** Ensure when a blog is liked, the name of the user that added the blog is shown in the details
 - [x] **Exercise 5.10** Sort the blog posts by the number of likes
-- [ ] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
-- [ ] **Exercise 5.12** Add ESlint to the project and fix all the linter errors
+- [x] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
+- [x] **Exercise 5.12** Add ESlint to the project and fix all the linter errors
+- [ ] **Exercise 5.13** Make a test to check that the component displaying a blog renders title and author but not URL or number of likes by default
+- [ ] **Exercise 5.14** Make a test to check that the URL and number of likes are shown when the button controlling the shown details have been clicked.
+- [ ] **Exercise 5.15** Make a test that ensures that if the like button is clicked twice, the event handler the component received as props is called twice
+- [ ] **Exercise 5.16** Make a test for the new blog form to check that the form calls the event handler it received as props with the right details when a new blog is created.
 
 ---
 
@@ -259,4 +263,20 @@ const handleDeleteBlog = (id) => {
   setBlogs(blogs.filter(blog => blog.id !== id))
   showNotification('Blog deleted!', 'success')
 }
+```
+
+---
+
+**Exercise 5.13 - Make a test to check that the component displaying a blog renders title and author but not URL or number of likes by default**
+
+**Concepts Learned**
+- `toBeDefined()` just checks the variable is not undefined. If `getByText` doesn't throw the tested element will always be defined. It is a weak assertion.
+- `toBeInTheDocument()` explicitly asserts that the DOM element exists in the document body of the rendered output
+- `getByText` trims leading/trailing spaces, but if there are weird non-breaking spaces or line breaks, the exact match may fail.
+- regex matchers are essential in handling exact match fails of `getByText`
+
+**Implementation**
+```javascript
+// works even if text is split or has extra spaces
+screen.getByText(/myTestTitle/)
 ```
