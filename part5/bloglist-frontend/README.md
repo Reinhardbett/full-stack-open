@@ -30,7 +30,7 @@
 - [x] **Exercise 5.10** Sort the blog posts by the number of likes
 - [x] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
 - [x] **Exercise 5.12** Add ESlint to the project and fix all the linter errors
-- [ ] **Exercise 5.13** Make a test to check that the component displaying a blog renders title and author but not URL or number of likes by default
+- [x] **Exercise 5.13** Make a test to check that the component displaying a blog renders title and author but not URL or number of likes by default
 - [ ] **Exercise 5.14** Make a test to check that the URL and number of likes are shown when the button controlling the shown details have been clicked.
 - [ ] **Exercise 5.15** Make a test that ensures that if the like button is clicked twice, the event handler the component received as props is called twice
 - [ ] **Exercise 5.16** Make a test for the new blog form to check that the form calls the event handler it received as props with the right details when a new blog is created.
@@ -280,3 +280,9 @@ const handleDeleteBlog = (id) => {
 // works even if text is split or has extra spaces
 screen.getByText(/myTestTitle/)
 ```
+
+---
+
+**Exercise 5.14 - Make a test to check that the URL and number of likes are shown when the button controlling the shown details have been clicked.**
+
+**Concepts Learned**

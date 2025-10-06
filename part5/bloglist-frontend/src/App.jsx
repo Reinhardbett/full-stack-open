@@ -45,6 +45,12 @@ const App = () => {
     }
   }
 
+  const handleLikeBlog = async(blogToLike) => {
+    const updatedBlog = { ...blogToLike, likes: blogToLike.likes + 1 }
+    const returnedBlog = await blogService.update(blogToLike.id, updatedBlog)
+    setBlogs(blogs.map(blog=> blog.id === returnedBlog.id ? returnedBlog : blog))
+  }
+
   const handleLogin = async (userObject) => {
     try {
       const user = await loginService.login(userObject)
@@ -104,7 +110,13 @@ const App = () => {
         .slice() // create a shallow copy to avoid mutating state
         .sort((a, b) => b.likes - a.likes)
         .map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} onDelete={handleDeleteBlog} />
+          <Blog 
+            key={blog.id} 
+            blog={blog} 
+            user={user} 
+            onDelete={handleDeleteBlog} 
+            handleLike={handleLikeBlog}
+          />
         )
       }
     </div>
