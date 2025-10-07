@@ -31,9 +31,9 @@
 - [x] **Exercise 5.11** Add the logic for deleting blog posts in the frontend
 - [x] **Exercise 5.12** Add ESlint to the project and fix all the linter errors
 - [x] **Exercise 5.13** Make a test to check that the component displaying a blog renders title and author but not URL or number of likes by default
-- [ ] **Exercise 5.14** Make a test to check that the URL and number of likes are shown when the button controlling the shown details have been clicked.
-- [ ] **Exercise 5.15** Make a test that ensures that if the like button is clicked twice, the event handler the component received as props is called twice
-- [ ] **Exercise 5.16** Make a test for the new blog form to check that the form calls the event handler it received as props with the right details when a new blog is created.
+- [x] **Exercise 5.14** Make a test to check that the URL and number of likes are shown when the button controlling the shown details have been clicked.
+- [x] **Exercise 5.15** Make a test that ensures that if the like button is clicked twice, the event handler the component received as props is called twice
+- [x] **Exercise 5.16** Make a test for the new blog form to check that the form calls the event handler it received as props with the right details when a new blog is created.
 
 ---
 
@@ -283,6 +283,21 @@ screen.getByText(/myTestTitle/)
 
 ---
 
-**Exercise 5.14 - Make a test to check that the URL and number of likes are shown when the button controlling the shown details have been clicked.**
+**Exercise 5.16 - Make a test for the new blog form to check that the form calls the event handler it received as props with the right details when a new blog is created.**
 
 **Concepts Learned**
+- Using `vi.fn()` or `jest.fn()` creates mock event handlers for testing
+- Using mock objects, we test that form fields controlled by React state are called correctly
+- Using methods such as `toHaveBeenCalledWith` and `toHaveBeenCalledTimes` we can check both the number of times the handler is called and the exact arguments it receives.
+
+**Implementation**
+```javascript
+expect(handleCreateBlog).toHaveBeenCalledTimes(1)
+    
+// Assert that handleCreateBlog is called with title, author, and url details
+expect(handleCreateBlog).toHaveBeenCalledWith({
+    title: 'myTestTitle',
+    author: 'myTestAuthor',
+    url: 'myTestUrl'
+})
+```
