@@ -18,11 +18,16 @@
 
 **Concepts Learned**
 
-- 
+- Playwright tests do not automatically start apps, thus they must be started in parallel
+- Testing with different browsers will slow down the process
+- One can configure playwright to use only one browser (or delete troublesome ones in `playwright.config.js`)
 
 **Implementation** 
 ```javascript
-
+"scripts": {
+"test": "playwright test --project=chromium",
+"test:report": "playwright show-report"
+},
 ```
 
 --- 
